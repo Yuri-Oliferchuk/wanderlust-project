@@ -119,7 +119,7 @@ Save your code, search for a location, and you should be able to see place infor
 31.Congratulations! You should now be able to search for place and weather details by city and see the response on the page!
   Note: The OpenWeather API endpoint we use can take input of the form: city, state, like Baltimore, Maryland. You can read more about the OpenWeather API here.
 
-##Challenges
+**Challenges**
 
 32.Great work finishing up the project! If you want more practice, try any of the following challenges:
 - Fetch more than 4 places and randomize which ones are added to the page.
