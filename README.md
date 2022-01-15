@@ -1,6 +1,6 @@
-**ASYNC JAVASCRIPT AND HTTP REQUESTS
+#ASYNC JAVASCRIPT AND HTTP REQUESTS
 
-*Wanderlust*
+##Wanderlust
 
 Using fetch, async, and await, you’ll request information from the Foursquare API and OpenWeather API to create a travel website.
 
@@ -20,7 +20,7 @@ Tasks
 
 Mark the tasks as complete by checking them off
 
-*Add API Information*
+##Add API Information
 1.
 Save the API Key you obtained from the Foursquare API to const foursquareKey.
 
@@ -33,11 +33,11 @@ Add a query string with a near parameter without a value. To add a query to the 
 Save the API Key you obtained from OpenWeather to const openWeatherKey.
 
 4.
-Save 'https://api.openweathermap.org/data/2.5/weather' to const weatherUrl.
+Save 'api.openweathermap.org/data/2.5/weather'  to const weatherUrl.
 
 See examples of OpenWeather API calls under ‘Examples of API calls’ on the OpenWeather documentation.
 
-*Get Data from Foursquare*
+##Get Data from Foursquare
 
 5.
 The following steps will guide you through constructing the getPlaces() function, which is called from executeSearch().
@@ -86,7 +86,7 @@ For this project, you will only need to work with the places in the results prop
 15.
 Return places as the very last line of the try code block. Open the hint to peek at the whole try block.
 
-*Get Data from OpenWeather*
+##Get Data from OpenWeather
 
 16.
 The following steps will guide you through constructing the getForecast() function, which is called from executeSearch().
@@ -113,7 +113,7 @@ Log jsonResponse to the console. Enter a city in the browser and see what is log
 21.
 Return jsonResponse at the bottom of the try code block. Open the hint to inspect the complete try block inside getForecast().
 
-*Render Data From Foursquare API*
+##Render Data From Foursquare API
 
 22.
 If you want to follow the steps and render the data with guidance, that’s great! If not, check the hint and update the renderPlaces() function provided in main.js.
@@ -147,7 +147,7 @@ Chain a .then() method to getPlaces(). .then()‘s callback function should take
 
 Save your code, search for a location, and you should be able to see place information displayed towards the bottom of the Wanderlust page!
 
-*Render Data from OpenWeather*
+##Render Data from OpenWeather
 
 28.
 If you want to follow the steps and render the data with guidance, that’s great! If not, check the hint and update the renderForecast() function provided in main.js.
@@ -162,14 +162,14 @@ Time to hook up the forecast data and the render function.
 
 Inside executeSearch(), add a .then() method to getForecast(). .then()‘s callback function should take a single parameter, forecast, and return renderForecast(forecast).
 
-*Complete!*
+##Complete!
 
 31.
 Congratulations! You should now be able to search for place and weather details by city and see the response on the page!
 
 Note: The OpenWeather API endpoint we use can take input of the form: city, state, like Baltimore, Maryland. You can read more about the OpenWeather API here.
 
-*Challenges*
+##Challenges
 
 32.
 Great work finishing up the project! If you want more practice, try any of the following challenges:

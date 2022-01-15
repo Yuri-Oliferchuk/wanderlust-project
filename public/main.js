@@ -1,10 +1,10 @@
 // Foursquare API Info
-const foursquareKey = 'fsq3M/MnY7M44SuZrq/a0aMmDtCrD0jiSrPm+d81Xl8CP/c=';
-const url = 'https://api.foursquare.com/v3/places/search?near=';
-const limit = '&limit=10';
+const foursquareKey = 'key';
+const url = 'https://api.foursquare.com/v3/places/search?sort=RATING&near=';
+const limit = '&limit=30';
 
 // OpenWeather Info
-const openWeatherKey = '4e8e3d9c4b0bdd8c7b26bf517231d3c7';
+const openWeatherKey = 'key';
 const weatherUrl = 'https://api.openweathermap.org/data/2.5/weather';
 
 // Page Elements
@@ -23,6 +23,21 @@ const options = {
     Authorization: foursquareKey,
   }
 };
+// Random function
+const randomArray = (num) => {
+  const arr = [];
+  for(let i=0; i<num; i++) {
+      arr.push(Math.floor(Math.random()*30));
+  }
+   arr.sort();    
+   for(let i=1; i<arr.length; i++) {
+       if(arr[i] == arr[i-1]) {
+          arr[i] += 1;
+          i--;
+       }
+   }
+  return arr;
+};
 
 // Add AJAX functions here:
 const getPlaces = async () => {
@@ -33,6 +48,7 @@ const getPlaces = async () => {
     if(response.ok) {
       const jsonResponse = await response.json();
       const places = jsonResponse.results;
+      // console.log(places);
       return places;
     }
 
@@ -41,6 +57,7 @@ const getPlaces = async () => {
   }
 };
 
+
 const getForecast = async () => {
   const city = $input.val();
   const urlToFetch = weatherUrl + '?appid=' + openWeatherKey + '&q=' + city;
@@ -48,6 +65,7 @@ const getForecast = async () => {
     const response = await fetch(urlToFetch, {})
     if(response.ok) {
       const jsonResponse = await response.json();
+      // console.log(jsonResponse);
       return jsonResponse;
     }
   } catch(err) {
@@ -55,20 +73,40 @@ const getForecast = async () => {
   }
 };
 
+const getPhoto = async (id) => {
+  const urlToFeatch = `
+  https://api.foursquare.com/v3/places/${id}/photos?limit=1`;
+  try {
+    const response = await fetch(urlToFeatch, options)
+    if(response.ok) {
+      const jsonResponse = await response.json();
+      return jsonResponse;
+    }
+  } catch(err) {
+    console.log(err);
+  }
+
+}
+
 
 // Render functions
-const renderPlaces = (places) => {
-  $placeDivs.forEach(($place, index) => {
+const renderPlaces = async (places) => {
+  const position = randomArray(4);
+  for(let index=0; index<4; index++) {
     // Add your code here:
-
-    const placeContent = '';
-    $place.append(placeContent);
-  });
+    const place = places[position[index]];
+    const placeIcon = place.categories[0].icon;
+    const photo = await getPhoto(place.fsq_id);
+    const placeImgSrc = `${photo[0].prefix}200x200${photo[0].suffix}`
+    if(place.location.postcode==undefined) {place.location.postcode = ""}
+    const placeContent = createPlaceHTML(place.name, place.location, placeImgSrc);
+    $placeDivs[index].append(placeContent);
+  };
   $destination.append(`<h2>${places[0].location.locality}</h2>`);
 };
 
 const renderForecast = (forecast) => {
-  const weatherContent = '';
+  const weatherContent = createWeatherHTML(forecast);
   $weatherDiv.append(weatherContent);
 };
 
@@ -77,8 +115,8 @@ const executeSearch = () => {
   $weatherDiv.empty();
   $destination.empty();
   $container.css("visibility", "visible");
-  getPlaces();
-  getForecast();
+  getPlaces().then(places => renderPlaces(places));
+  getForecast().then(forecast => renderForecast(forecast));
   return false;
 }
 
